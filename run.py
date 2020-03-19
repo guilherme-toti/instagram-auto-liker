@@ -8,10 +8,10 @@ CONFIGS = {
     'USERNAME': 'YOUR_USERNAME',
     'PASSWORD': 'YOUR_PASSWORD',
     'HASHTAGS': [
-        'YOUR_HASHTAGS',
+        'FIRST_HASHTAG', 'SECOND_HASHTAG'
     ],
     'TOTAL_LIKES_PER_HASHTAG': 300,
-    'SYSTEM': 'mac/linux'
+    'SYSTEM': 'windows/linux/mac'
 }
 
 total_likes = 0
@@ -21,19 +21,8 @@ driver = webdriver.Chrome('./chromedriver_{}'.format(CONFIGS['SYSTEM']))
 print("Loading Instagram")
 driver.get("https://www.instagram.com/")
 
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((
-    By.LINK_TEXT, "Faça login"
-)))
-print("Instagram loaded!")
-
 print("Logging in")
-loginLink = driver.find_element(By.LINK_TEXT, "Faça login")
 
-if not loginLink:
-    print("Login error, exiting...")
-    driver.quit()
-
-loginLink.click()
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((
     By.NAME, 'username'
 )))
@@ -48,7 +37,7 @@ passwordInput.submit()
 
 # Search
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((
-    By.XPATH, "//input[@placeholder='Busca']"
+    By.XPATH, "/html/body/div[1]/section/nav/div[2]/div/div/div[2]/input"
 )))
 print("Logged in!")
 
@@ -93,7 +82,7 @@ for current_hashtag in CONFIGS['HASHTAGS']:
 
         try:
             likeButton = driver.find_element(
-                By.CLASS_NAME, "coreSpriteHeartOpen"
+                By.XPATH, "/html/body/div[4]/div[2]/div/article/div[2]/section[1]/span[1]/button"
             )
             likeButton.click()
 
@@ -106,8 +95,9 @@ for current_hashtag in CONFIGS['HASHTAGS']:
 
             total_likes = total_likes + 1
             current_hashtag_likes = current_hashtag_likes + 1
-            time.sleep(4)
-        except:
+            time.sleep(10)
+        except Exception as e:
+            print(e)
             pass
 
         try:
