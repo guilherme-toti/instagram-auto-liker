@@ -5,10 +5,10 @@ from selenium.webdriver.common.by import By
 import time
 
 CONFIGS = {
-    'USERNAME': 'YOUR_USERNAME',
-    'PASSWORD': 'YOUR_PASSWORD',
+    'USERNAME': '',
+    'PASSWORD': '',
     'HASHTAGS': [
-        'FIRST_HASHTAG', 'SECOND_HASHTAG'
+        'aku', 'yo'
     ],
     'TOTAL_LIKES_PER_HASHTAG': 300,
     'SYSTEM': 'windows/linux/mac'
